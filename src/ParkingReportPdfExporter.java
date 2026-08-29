@@ -27,16 +27,17 @@ import javax.imageio.ImageIO;
 public class ParkingReportPdfExporter {
     private static final int W = 1240;
     private static final int H = 1754;
-    private static final Color NAVY = new Color(8, 20, 38);
-    private static final Color CARD = new Color(18, 38, 64);
-    private static final Color CARD_2 = new Color(23, 47, 77);
-    private static final Color TEXT = new Color(241, 245, 249);
-    private static final Color MUTED = new Color(148, 163, 184);
-    private static final Color BLUE = new Color(59, 130, 246);
-    private static final Color GREEN = new Color(34, 197, 94);
-    private static final Color AMBER = new Color(245, 180, 55);
-    private static final Color PURPLE = new Color(168, 85, 247);
-    private static final Color RED = new Color(239, 68, 68);
+    private static final Color NAVY = new Color(246, 249, 253);
+    private static final Color CARD = Color.WHITE;
+    private static final Color CARD_2 = new Color(239, 245, 255);
+    private static final Color TEXT = new Color(15, 39, 66);
+    private static final Color MUTED = new Color(100, 116, 139);
+    private static final Color BORDER = new Color(218, 228, 241);
+    private static final Color BLUE = new Color(37, 99, 235);
+    private static final Color GREEN = new Color(5, 150, 105);
+    private static final Color AMBER = new Color(234, 145, 20);
+    private static final Color PURPLE = new Color(124, 58, 237);
+    private static final Color RED = new Color(225, 55, 72);
     private static final Color[] SERIES = {BLUE, PURPLE, GREEN, AMBER, RED};
     private static final DateTimeFormatter DATE = DateTimeFormatter.ofPattern("dd MMM yyyy");
     private static final DateTimeFormatter DATE_TIME = DateTimeFormatter.ofPattern("dd MMM yyyy, hh:mm a");
@@ -166,7 +167,7 @@ public class ParkingReportPdfExporter {
         panel(c, 55, 560, 1130, 255);
         c.text(String.format("%.1f%%", utilization), 95, 635, 48, Font.BOLD, utilization > 85 ? RED : BLUE);
         c.text(d.getCurrentlyParked() + " occupied of " + d.getTotalSpaces() + " total spaces", 95, 680, 18, Font.PLAIN, MUTED);
-        c.g.setColor(new Color(40, 63, 91)); c.g.fillRoundRect(95, 720, 1050, 28, 20, 20);
+        c.g.setColor(new Color(225, 232, 242)); c.g.fillRoundRect(95, 720, 1050, 28, 20, 20);
         c.g.setColor(utilization > 85 ? RED : BLUE);
         c.g.fillRoundRect(95, 720, (int) (1050 * Math.min(100, utilization) / 100), 28, 20, 20);
         c.text(utilization < 60 ? "Healthy capacity available" : utilization < 85 ? "Moderate facility usage" : "High occupancy — monitor capacity",
@@ -230,11 +231,16 @@ public class ParkingReportPdfExporter {
     private Canvas page(ParkingReportData d, String label, int pageNo) {
         Canvas c = new Canvas();
         c.g.setColor(NAVY); c.g.fillRect(0, 0, W, H);
-        c.g.setColor(new Color(6, 16, 31)); c.g.fillRect(0, 0, W, 78);
-        c.text("ParkX", 55, 48, 30, Font.BOLD, AMBER);
-        c.text("Parking Management System", 175, 47, 16, Font.PLAIN, MUTED);
-        c.text("PARKING HISTORY & ANALYTICS REPORT", 1185, 32, 13, Font.BOLD, TEXT, true);
-        c.text(label, 1185, 55, 12, Font.PLAIN, MUTED, true);
+        c.g.setColor(BLUE); c.g.fillRect(0, 0, W, 78);
+        c.g.setColor(new Color(73, 135, 245)); c.g.fillOval(1070, -90, 260, 210);
+        c.g.setColor(new Color(96, 165, 250)); c.g.fillOval(1140, 20, 150, 115);
+        c.text("PARKX", 55, 48, 30, Font.BOLD, Color.WHITE);
+        c.text("Parking Management System", 175, 47, 16, Font.PLAIN,
+                new Color(219, 234, 254));
+        c.text("PARKING HISTORY & ANALYTICS REPORT", 1035, 32, 13,
+                Font.BOLD, Color.WHITE, true);
+        c.text(label, 1035, 55, 12, Font.PLAIN,
+                new Color(219, 234, 254), true);
         c.text("Generated: " + d.getGeneratedAt().format(DATE_TIME), 55, 1690, 12, Font.PLAIN, MUTED);
         c.text("Reporting period: " + d.getPeriodFrom().format(DATE) + " – " + d.getPeriodTo().format(DATE), 1185, 1690, 12, Font.PLAIN, MUTED, true);
         return c;
@@ -247,7 +253,7 @@ public class ParkingReportPdfExporter {
 
     private void metric(Canvas c, int x, int y, int w, int h, String title, String value, String desc, Color accent) {
         panel(c, x, y, w, h); c.g.setColor(accent); c.g.fillRoundRect(x, y, 7, h, 8, 8);
-        c.g.setColor(new Color(accent.getRed(), accent.getGreen(), accent.getBlue(), 45)); c.g.fillOval(x + w - 58, y + 18, 32, 32);
+        c.g.setColor(new Color(accent.getRed(), accent.getGreen(), accent.getBlue(), 35)); c.g.fillOval(x + w - 58, y + 18, 32, 32);
         c.text(title, x + 24, y + 28, 12, Font.BOLD, MUTED);
         c.fitText(value, x + 24, y + 70, w - 48, 25, Font.BOLD, accent);
         c.fitText(desc, x + 24, y + 102, w - 48, 13, Font.PLAIN, MUTED);
@@ -261,8 +267,11 @@ public class ParkingReportPdfExporter {
     }
 
     private void panel(Canvas c, int x, int y, int w, int h) {
+        c.g.setColor(new Color(25, 55, 95, 16));
+        c.g.fillRoundRect(x + 2, y + 5, w, h, 22, 22);
         c.g.setColor(CARD); c.g.fillRoundRect(x, y, w, h, 22, 22);
-        c.g.setColor(new Color(40, 63, 91)); c.g.setStroke(new BasicStroke(1)); c.g.drawRoundRect(x, y, w, h, 22, 22);
+        c.g.setColor(BORDER); c.g.setStroke(new BasicStroke(1));
+        c.g.drawRoundRect(x, y, w, h, 22, 22);
     }
 
     private void note(Canvas c, int x, int y, int w, int h, String title, String text) {
@@ -274,7 +283,8 @@ public class ParkingReportPdfExporter {
         int total = values.values().stream().mapToInt(Integer::intValue).sum();
         c.g.setStroke(new BasicStroke(55, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         if (total == 0) {
-            c.g.setColor(new Color(40, 63, 91)); c.g.drawOval(x + 45, y + 45, w - 90, h - 90);
+            c.g.setColor(new Color(222, 231, 242));
+            c.g.drawOval(x + 45, y + 45, w - 90, h - 90);
         } else {
             double start = 90; int i = 0;
             for (int value : values.values()) {
@@ -316,7 +326,7 @@ public class ParkingReportPdfExporter {
     }
 
     private void axes(Canvas c, int x, int y, int w, int h) {
-        c.g.setColor(new Color(40, 63, 91)); c.g.setStroke(new BasicStroke(1));
+        c.g.setColor(new Color(222, 231, 242)); c.g.setStroke(new BasicStroke(1));
         for (int i = 0; i <= 4; i++) { int gy = y + 20 + i * (h - 58) / 4; c.g.drawLine(x + 55, gy, x + w, gy); }
     }
     private void noChartData(Canvas c, int x, int y, int w, int h) { c.center("No revenue data for this period", x + w / 2, y + h / 2, 17, Font.PLAIN, MUTED); }

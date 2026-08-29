@@ -137,23 +137,8 @@ public class HistoryWindow extends JFrame {
             return;
         }
 
-        JFileChooser chooser = new JFileChooser();
-        chooser.setDialogTitle("Export PARKX Analytics Report");
-        chooser.setSelectedFile(new java.io.File("PARKX-Analytics-Report-"
-                + LocalDate.now().format(DateTimeFormatter.ISO_DATE) + ".pdf"));
-        chooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
-                "PDF documents (*.pdf)", "pdf"));
-        if (chooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION) return;
-
-        Path target = chooser.getSelectedFile().toPath();
-        if (!target.getFileName().toString().toLowerCase().endsWith(".pdf"))
-            target = target.resolveSibling(target.getFileName() + ".pdf");
-        if (java.nio.file.Files.exists(target)) {
-            int answer = JOptionPane.showConfirmDialog(this,
-                    "The selected PDF already exists. Replace it?", "Confirm Replace",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (answer != JOptionPane.YES_OPTION) return;
-        }
+        Path target = ReportSaveDialog.showDialog(this, from, to);
+        if (target == null) return;
 
         final Path output = target;
         exportButton.setEnabled(false);
