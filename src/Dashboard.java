@@ -82,7 +82,7 @@ public class Dashboard extends JFrame {
 
 
         JLabel logo =
-                new JLabel("ParkX");
+                new JLabel("PARKX");
 
         logo.setFont(
                 new Font(
@@ -104,7 +104,7 @@ public class Dashboard extends JFrame {
 
         JLabel subtitle =
                 new JLabel(
-                        "Smart Parking Control Center");
+                        "Parking Management System");
 
         subtitle.setForeground(
                 ParkXTheme.MUTED);
