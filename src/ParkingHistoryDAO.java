@@ -1,9 +1,49 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ParkingHistoryDAO {
+
+    public List<ParkingHistoryRecord> findByExitDateRange(
+            LocalDate from, LocalDate to) throws Exception {
+
+        String sql = "SELECT id, vehicle_number, owner_name, vehicle_type, "
+                + "slot_id, entry_time, exit_time, charged_hours, "
+                + "hourly_rate, total_fee FROM parking_history "
+                + "WHERE exit_time >= ? AND exit_time < ? "
+                + "ORDER BY exit_time DESC";
+
+        List<ParkingHistoryRecord> records = new ArrayList<>();
+
+        try (Connection con = DatabaseConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setTimestamp(1, Timestamp.valueOf(from.atStartOfDay()));
+            ps.setTimestamp(2, Timestamp.valueOf(to.plusDays(1).atStartOfDay()));
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    records.add(new ParkingHistoryRecord(
+                            rs.getInt("id"),
+                            rs.getString("vehicle_number"),
+                            rs.getString("owner_name"),
+                            rs.getString("vehicle_type"),
+                            rs.getString("slot_id"),
+                            rs.getTimestamp("entry_time").toLocalDateTime(),
+                            rs.getTimestamp("exit_time").toLocalDateTime(),
+                            rs.getLong("charged_hours"),
+                            rs.getDouble("hourly_rate"),
+                            rs.getDouble("total_fee")));
+                }
+            }
+        }
+
+        return records;
+    }
 
     public void insertHistory(
             Connection con,
