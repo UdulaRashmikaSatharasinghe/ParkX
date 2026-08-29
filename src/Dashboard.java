@@ -1096,6 +1096,16 @@ public class Dashboard extends JFrame {
                 btnAnalytics
         );
 
+        JButton btnHistory = new JButton("History");
+        btnHistory.setBounds(900, 600, 220, 45);
+        btnHistory.setBackground(ParkXTheme.GREEN);
+        btnHistory.setForeground(Color.WHITE);
+        btnHistory.setFont(new Font("SansSerif", Font.BOLD, 13));
+        btnHistory.setFocusPainted(false);
+        btnHistory.setBorderPainted(false);
+        btnHistory.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        getContentPane().add(btnHistory);
+
 
         btnSpaces.addActionListener(
                 e ->
@@ -1110,6 +1120,8 @@ public class Dashboard extends JFrame {
                                 manager
                         )
         );
+
+        btnHistory.addActionListener(e -> new HistoryWindow());
     }
 
 
