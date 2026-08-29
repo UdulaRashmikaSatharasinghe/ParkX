@@ -21,7 +21,7 @@ public class BillWindow extends JFrame {
                 ParkXTheme.BACKGROUND);
 
         JLabel title =
-                new JLabel("PARKX");
+                new JLabel("ParkX");
 
         title.setFont(
                 ParkXTheme.titleFont(28));
