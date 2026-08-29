@@ -9,6 +9,23 @@ import java.util.List;
 
 public class ParkingHistoryDAO {
 
+    public List<ParkingHistoryRecord> findAll() throws Exception {
+        String sql = "SELECT id, vehicle_number, owner_name, vehicle_type, "
+                + "slot_id, entry_time, exit_time, charged_hours, "
+                + "hourly_rate, total_fee FROM parking_history "
+                + "ORDER BY exit_time ASC";
+
+        List<ParkingHistoryRecord> records = new ArrayList<>();
+        try (Connection con = DatabaseConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                records.add(mapRecord(rs));
+            }
+        }
+        return records;
+    }
+
     public List<ParkingHistoryRecord> findByExitDateRange(
             LocalDate from, LocalDate to) throws Exception {
 
@@ -27,22 +44,23 @@ public class ParkingHistoryDAO {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    records.add(new ParkingHistoryRecord(
-                            rs.getInt("id"),
-                            rs.getString("vehicle_number"),
-                            rs.getString("owner_name"),
-                            rs.getString("vehicle_type"),
-                            rs.getString("slot_id"),
-                            rs.getTimestamp("entry_time").toLocalDateTime(),
-                            rs.getTimestamp("exit_time").toLocalDateTime(),
-                            rs.getLong("charged_hours"),
-                            rs.getDouble("hourly_rate"),
-                            rs.getDouble("total_fee")));
+                    records.add(mapRecord(rs));
                 }
             }
         }
 
         return records;
+    }
+
+    private ParkingHistoryRecord mapRecord(ResultSet rs) throws Exception {
+        return new ParkingHistoryRecord(
+                rs.getInt("id"), rs.getString("vehicle_number"),
+                rs.getString("owner_name"), rs.getString("vehicle_type"),
+                rs.getString("slot_id"),
+                rs.getTimestamp("entry_time").toLocalDateTime(),
+                rs.getTimestamp("exit_time").toLocalDateTime(),
+                rs.getLong("charged_hours"), rs.getDouble("hourly_rate"),
+                rs.getDouble("total_fee"));
     }
 
     public void insertHistory(
