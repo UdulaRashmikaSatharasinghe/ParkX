@@ -1199,7 +1199,7 @@ public class AnalyticsWindow extends JFrame {
 
         JLabel footer =
                 new JLabel(
-                        "ParkX  •  Parking Management System");
+                        "ParkX  •   Parking Management System");
 
         footer.setForeground(
                 ParkXTheme.MUTED);
@@ -1211,7 +1211,7 @@ public class AnalyticsWindow extends JFrame {
                 300,
                 620,
                 500,
-                25)
+                25);
 
         getContentPane().add(
                 footer);
