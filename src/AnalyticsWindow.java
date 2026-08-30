@@ -1211,7 +1211,7 @@ public class AnalyticsWindow extends JFrame {
                 300,
                 620,
                 500,
-                25);
+                25)
 
         getContentPane().add(
                 footer);
