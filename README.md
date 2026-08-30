@@ -1,15 +1,15 @@
-# ParkX Eclipse Project
+# ParkX Project
 
 This is a self-contained Eclipse Java project. It includes the complete ParkX
 source code and MySQL Connector/J under `lib`.
 
-## Import and run
+Import and run
 
 1. Start Eclipse using a workspace outside this project directory.
 2. Select **File > Import > General > Existing Projects into Workspace**.
-3. Select this `ParkX-Eclipse` directory as the root directory.
-4. Make sure **Copy projects into workspace** is cleared, then select **Finish**.
-5. Open `Main.launch` and select **Run**, or run `src/Main.java` as a Java
+3. Select this `ParkX` directory as the root directory.
+4. Make sure Copy projects into workspace is cleared, then select Finish.
+5. Open `Main.launch` and select Run, or run `src/Main.java` as a Java
    application.
 
 The project uses Eclipse's default installed JRE and compiles at Java 17
