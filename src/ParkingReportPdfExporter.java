@@ -234,7 +234,7 @@ public class ParkingReportPdfExporter {
         c.g.setColor(BLUE); c.g.fillRect(0, 0, W, 78);
         c.g.setColor(new Color(73, 135, 245)); c.g.fillOval(1070, -90, 260, 210);
         c.g.setColor(new Color(96, 165, 250)); c.g.fillOval(1140, 20, 150, 115);
-        c.text("PARKX", 55, 48, 30, Font.BOLD, Color.WHITE);
+        c.text("ParkX", 55, 48, 30, Font.BOLD, Color.WHITE);
         c.text("Parking Management System", 175, 47, 16, Font.PLAIN,
                 new Color(219, 234, 254));
         c.text("PARKING HISTORY & ANALYTICS REPORT", 1035, 32, 13,
