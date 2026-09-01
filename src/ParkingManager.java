@@ -50,7 +50,7 @@ public class ParkingManager {
                 records =
                 vehicleDAO.loadAllActiveVehicles();
 
-        for (VehicleDAO.LoadedVehicleRecord record :
+				for (VehicleDAO.LoadedVehicleRecord record :
                 records) {
 
             Vehicle vehicle =

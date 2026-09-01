@@ -1,7 +1,15 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+/*Abstraction
+*Defines common vehicle behavior
+without creating a generic vehicle */
+
 public abstract class Vehicle {
+	
+
+/*Encapsulation
+Protects data from direct modification*/
 
     private String vehicleNumber;
     private String ownerName;

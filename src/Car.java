@@ -1,5 +1,8 @@
 import java.time.LocalDateTime;
 
+/*Inheritance 
+ Reuses common code from Vehicle*/
+
 public class Car extends Vehicle {
 
     public Car(
