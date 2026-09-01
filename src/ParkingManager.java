@@ -4,6 +4,13 @@ import java.util.ArrayList;
 
 public class ParkingManager {
 
+	
+/*Polymorphism
+ * Same Vehicle reference can work with different subclasses
+ * I used runtime polymorphism because
+ * ParkingManager can store all
+ vehicle subclasses as Vehicle objects.*/
+	
     private ArrayList<Vehicle> vehicles;
     private ArrayList<ParkingSpace> parkingSpaces;
 
