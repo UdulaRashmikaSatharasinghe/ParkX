@@ -1,5 +1,9 @@
 public class ParkingSpace {
 
+/*Encapsulation
+Protects data from direct modification*/
+	
+	
     private String slotId;
     private String floor;
     private boolean occupied;
